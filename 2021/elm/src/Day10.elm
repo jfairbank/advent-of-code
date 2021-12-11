@@ -1,6 +1,7 @@
 module Day10 exposing (puzzle1, puzzle2)
 
 import Array exposing (Array)
+import Dict exposing (Dict)
 import Stack exposing (Stack)
 
 
@@ -34,39 +35,30 @@ type alias RawLine =
     List TaggedSymbol
 
 
-parseChar : Char -> TaggedSymbol
-parseChar char =
-    case char of
-        '(' ->
-            Opening <| OpeningSymbol Paren
-
-        ')' ->
-            Closing <| ClosingSymbol Paren
-
-        '[' ->
-            Opening <| OpeningSymbol SquareBracket
-
-        ']' ->
-            Closing <| ClosingSymbol SquareBracket
-
-        '{' ->
-            Opening <| OpeningSymbol CurlyBracket
-
-        '}' ->
-            Closing <| ClosingSymbol CurlyBracket
-
-        '<' ->
-            Opening <| OpeningSymbol AngleBracket
-
-        _ ->
-            Closing <| ClosingSymbol AngleBracket
+parseChar : Char -> Maybe TaggedSymbol
+parseChar =
+    let
+        taggedSymbolMappings : Dict Char TaggedSymbol
+        taggedSymbolMappings =
+            Dict.fromList
+                [ ( '(', Opening <| OpeningSymbol Paren )
+                , ( ')', Closing <| ClosingSymbol Paren )
+                , ( '[', Opening <| OpeningSymbol SquareBracket )
+                , ( ']', Closing <| ClosingSymbol SquareBracket )
+                , ( '{', Opening <| OpeningSymbol CurlyBracket )
+                , ( '}', Closing <| ClosingSymbol CurlyBracket )
+                , ( '<', Opening <| OpeningSymbol AngleBracket )
+                , ( '>', Closing <| ClosingSymbol AngleBracket )
+                ]
+    in
+    \char -> Dict.get char taggedSymbolMappings
 
 
 parse : String -> List RawLine
 parse =
     String.trim
         >> String.split "\n"
-        >> List.map (String.toList >> List.map parseChar)
+        >> List.map (String.toList >> List.filterMap parseChar)
 
 
 openingToClosing : OpeningSymbol -> ClosingSymbol
