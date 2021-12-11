@@ -11,6 +11,7 @@ module NaiveMatrix exposing
     , getRow
     , height
     , map
+    , set
     , width
     )
 
@@ -103,3 +104,11 @@ get i j (Matrix matrix) =
     matrix
         |> Array.get j
         |> Maybe.andThen (Array.get i)
+
+
+set : Int -> Int -> a -> Matrix a -> Matrix a
+set i j value ((Matrix matrix) as m) =
+    matrix
+        |> Array.get j
+        |> Maybe.map (\row -> Matrix <| Array.set j (Array.set i value row) matrix)
+        |> Maybe.withDefault m
