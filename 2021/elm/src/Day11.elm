@@ -33,19 +33,19 @@ parse input =
 
 getNeighbors : Coords -> Grid -> List ( Coords, Energy )
 getNeighbors ( i, j ) grid =
-    [ ( i - 1, j ) -- top
-    , ( i - 1, j + 1 ) -- top right
-    , ( i, j + 1 ) -- right
-    , ( i + 1, j + 1 ) -- bottom right
-    , ( i + 1, j ) -- bottom
-    , ( i + 1, j - 1 ) -- bottom left
-    , ( i, j - 1 ) -- left
-    , ( i - 1, j - 1 ) -- top left
+    [ ( i - 1, j ) --       top
+    , ( i - 1, j + 1 ) --   top right
+    , ( i, j + 1 ) --       right
+    , ( i + 1, j + 1 ) --   bottom right
+    , ( i + 1, j ) --       bottom
+    , ( i + 1, j - 1 ) --   bottom left
+    , ( i, j - 1 ) --       left
+    , ( i - 1, j - 1 ) --   top left
     ]
         |> List.filterMap
-            (\(( neighborI, neighborJ ) as coords) ->
+            (\coords ->
                 grid
-                    |> Matrix.get neighborI neighborJ
+                    |> Matrix.get coords
                     |> Maybe.map (\neighbor -> ( coords, neighbor ))
             )
 
@@ -78,7 +78,7 @@ runStep grid =
         flash : List Coords -> Set Coords -> Grid -> ( Set Coords, Grid )
         flash flashQueue flashed grid_ =
             case flashQueue of
-                (( i, j ) as coords) :: remaining ->
+                coords :: remaining ->
                     let
                         updatedFlashed : Set Coords
                         updatedFlashed =
@@ -101,10 +101,10 @@ runStep grid =
                         updatedGrid : Grid
                         updatedGrid =
                             List.foldl
-                                (\( ( neighborI, neighborJ ), neighborEnergy ) accGrid ->
-                                    Matrix.set neighborI neighborJ neighborEnergy accGrid
+                                (\( neighborCoords, neighborEnergy ) accGrid ->
+                                    Matrix.set neighborCoords neighborEnergy accGrid
                                 )
-                                (Matrix.set i j (Energy 0) grid_)
+                                (Matrix.set coords (Energy 0) grid_)
                                 updatedNeighbors
 
                         neighborsForQueue : List Coords

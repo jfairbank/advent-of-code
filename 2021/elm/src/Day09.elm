@@ -19,15 +19,15 @@ parse input =
 
 getNeighbors : Coords -> Grid -> List ( Coords, Int )
 getNeighbors ( i, j ) grid =
-    [ ( i - 1, j )
-    , ( i, j + 1 )
-    , ( i + 1, j )
-    , ( i, j - 1 )
+    [ ( i - 1, j ) -- top
+    , ( i, j + 1 ) -- right
+    , ( i + 1, j ) -- bottom
+    , ( i, j - 1 ) -- left
     ]
         |> List.filterMap
-            (\(( neighborI, neighborJ ) as coords) ->
+            (\coords ->
                 grid
-                    |> Matrix.get neighborI neighborJ
+                    |> Matrix.get coords
                     |> Maybe.map (\neighbor -> ( coords, neighbor ))
             )
 
