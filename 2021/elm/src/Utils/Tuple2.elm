@@ -1,4 +1,14 @@
-module Utils.Tuple2 exposing (sequenceMaybe)
+module Utils.Tuple2 exposing (fromList, sequenceMaybe)
+
+
+fromList : List a -> Maybe ( a, a )
+fromList list =
+    case list of
+        [ x, y ] ->
+            Just ( x, y )
+
+        _ ->
+            Nothing
 
 
 sequenceMaybe : ( Maybe a, Maybe b ) -> Maybe ( a, b )
