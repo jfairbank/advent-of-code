@@ -11,6 +11,7 @@ module NaiveMatrix exposing
     , getRow
     , height
     , map
+    , new
     , set
     , width
     )
@@ -28,6 +29,12 @@ type alias Coords =
 
 type Matrix a
     = Matrix (Array (Vector a))
+
+
+new : ( Int, Int ) -> a -> Matrix a
+new ( width_, height_ ) initialValue =
+    List.repeat height_ (List.repeat width_ initialValue)
+        |> fromList
 
 
 fromList : List (List a) -> Matrix a
