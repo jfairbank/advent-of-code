@@ -1,10 +1,10 @@
 module Day13 exposing (puzzle1, puzzle2)
 
 import Array
-import NaiveMatrix as Matrix exposing (Coords)
 import Parser exposing ((|.), (|=), Parser)
 import Set exposing (Set)
 import Set.Extra
+import Utils.NaiveMatrix as Matrix exposing (Coords)
 import Utils.Parser
 import Utils.Tuple2
 

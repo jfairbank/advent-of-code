@@ -3,7 +3,7 @@ module Day04 exposing (puzzle1, puzzle2)
 import Array exposing (Array)
 import Array.Extra
 import List.Extra
-import NaiveMatrix as Matrix exposing (Matrix, Vector)
+import Utils.NaiveMatrix as Matrix exposing (Matrix, Vector)
 
 
 

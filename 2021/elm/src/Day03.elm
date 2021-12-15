@@ -4,7 +4,7 @@ import Array exposing (Array)
 import Array.Extra
 import Binary
 import Bitwise
-import NaiveMatrix as Matrix exposing (Matrix)
+import Utils.NaiveMatrix as Matrix exposing (Matrix)
 
 
 

@@ -1,7 +1,7 @@
 module Day09 exposing (puzzle1, puzzle2)
 
-import NaiveMatrix as Matrix exposing (Coords, Matrix)
 import Set exposing (Set)
+import Utils.NaiveMatrix as Matrix exposing (Coords, Matrix)
 
 
 type alias Grid =

@@ -1,4 +1,4 @@
-module NonNegativeInt exposing (NonNegativeInt, fromInt, map, toInt)
+module Utils.NonNegativeInt exposing (NonNegativeInt, fromInt, map, toInt)
 
 
 type NonNegativeInt

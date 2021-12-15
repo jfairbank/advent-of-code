@@ -1,4 +1,4 @@
-module NaiveMatrix exposing
+module Utils.NaiveMatrix exposing
     ( Coords
     , Matrix
     , Vector

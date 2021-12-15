@@ -2,7 +2,7 @@ module Day06 exposing (puzzle1, puzzle2)
 
 import Array
 import Array.Extra
-import NonNegativeInt exposing (NonNegativeInt)
+import Utils.NonNegativeInt as NonNegativeInt exposing (NonNegativeInt)
 
 
 
