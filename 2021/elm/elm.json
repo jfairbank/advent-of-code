@@ -15,6 +15,7 @@
             "elm-community/list-extra": "8.5.1",
             "elm-community/maybe-extra": "5.2.1",
             "elm-explorations/test": "1.2.2",
+            "fifth-postulate/priority-queue": "1.0.0",
             "icidasset/elm-binary": "2.1.0",
             "stoeffel/set-extra": "1.2.3"
         },
