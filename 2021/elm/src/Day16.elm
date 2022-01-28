@@ -444,3 +444,104 @@ puzzle2 input =
     input
         |> parse
         |> Maybe.andThen evaluate
+
+
+
+---- OLD ----
+-- 110 000  0 000000001010100 000000000000000001011000010001010110100010111000001000000000101111000110000010001101 000000
+-- 110 000  0 000000001010100 000 000  0 000000000010110 000 100 0 1010 110 100 0 1011 100 000 1 00000000010 111 100 0 1100 000 100 0 1101 000000
+--   6   0 15              84   0   0 15              22   0   4 0   10   6   4 0   11   4   0 1           2   7   4 0   12   0   4 0   13 000000
+--
+-- logWithLevel tag thing = logInfo ("level=" ++ String.fromInt level ++ " " ++ tag) thing
+-- >> (\result ->
+--         let
+--             _ =
+--                 result
+--                     -- |> Result.mapError Parser.deadEndsToString
+--                     |> logInfo "result"
+--         in
+--         result
+--    )
+--
+-- headerBitLength : BitLength
+-- headerBitLength =
+--     addBitLengths versionBitLength typeIdBitLength
+-- bitLengthToString : BitLength -> String
+-- bitLengthToString =
+--     bitLengthToInt >> String.fromInt
+-- bitLengthMap : (Int -> Int) -> BitLength -> BitLength
+-- bitLengthMap f (BitLength length) =
+--     BitLength <| f length
+-- bitLengthMap3 : (Int -> Int -> Int -> Int) -> BitLength -> BitLength -> BitLength -> BitLength
+-- bitLengthMap3 f (BitLength length1) (BitLength length2) (BitLength length3) =
+--     BitLength <| f length1 length2 length3
+-- literalValueWithIndicatorBitLength : BitLength
+-- literalValueWithIndicatorBitLength =
+--     bitLengthMap ((+) 1) literalValueBitLength
+--
+-- roundUpToNearestMultipleOf : Int -> Int -> Int
+-- roundUpToNearestMultipleOf factor value =
+--     let
+--         sum =
+--             value + factor - 1
+--     in
+--     sum - modBy factor sum
+--
+-- t : String -> List String -> String
+-- t template vars =
+--     template
+--         |> String.split "{}"
+--         |> List.Extra.zip vars
+--         |> List.map (\( b, a ) -> a ++ b)
+--         |> String.join ""
+-- type LengthStrategy
+--     = RoundedTo BitLength
+--     | NoRounding
+-- versionedPacketBitLengthOld : LengthStrategy -> VersionedPacket -> BitLength
+-- versionedPacketBitLengthOld lengthStrategy { packet } =
+--     case packet of
+--         Literal value ->
+--             let
+--                 unpaddedValueLength : Int
+--                 unpaddedValueLength =
+--                     value
+--                         |> Binary.fromDecimal
+--                         |> Binary.toIntegers
+--                         |> List.length
+--                         |> logInfo "unpaddedValueLength"
+--                 paddedValueLength : Int
+--                 paddedValueLength =
+--                     roundUpToNearestMultipleOf (bitLengthToInt literalValueBitLength) unpaddedValueLength
+--                         |> logInfo "paddedValueLength"
+--                 numValueBits : Int
+--                 numValueBits =
+--                     (paddedValueLength // bitLengthToInt literalValueBitLength)
+--                         |> logInfo "numValueBits"
+--                 baseLength : BitLength
+--                 baseLength =
+--                     literalValueWithIndicatorBitLength
+--                         |> bitLengthMap ((*) numValueBits)
+--                         |> addBitLengths headerBitLength
+--                         |> logInfo "baseLength"
+--             in
+--             case lengthStrategy of
+--                 RoundedTo bitLength -> bitLengthMap (roundUpToNearestMultipleOf <| bitLengthToInt bitLength) baseLength
+--                 NoRounding -> baseLength
+--         Operator lengthType subVersionedPackets ->
+--             let
+--                 lengthTypeLength : BitLength
+--                 lengthTypeLength =
+--                     BitLength <|
+--                         case lengthType of
+--                             OperatorLength ->
+--                                 16
+--                             OperatorNumPackets ->
+--                                 12
+--             in
+--             subVersionedPackets
+--                 |> List.foldl
+--                     -- (\subVersionedPacket acc -> acc |> addBitLengths (versionedPacketBitLength subVersionedPacket))
+--                     (versionedPacketBitLength lengthStrategy >> addBitLengths)
+--                     (BitLength 0)
+--                 |> addBitLengths headerBitLength
+--                 |> addBitLengths lengthTypeLength

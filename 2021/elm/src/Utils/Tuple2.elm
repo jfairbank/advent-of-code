@@ -1,4 +1,4 @@
-module Utils.Tuple2 exposing (fromList, sequenceMaybe)
+module Utils.Tuple2 exposing (fromList, sequenceMaybe, uncurry)
 
 
 fromList : List a -> Maybe ( a, a )

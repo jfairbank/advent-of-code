@@ -255,3 +255,108 @@ puzzle2 input =
         |> expandRisks 5
         |> calculateMinRisk
         |> Maybe.map riskToInt
+
+
+
+-- minRiskDynamicProgramming : Risks -> Maybe Risk
+-- minRiskDynamicProgramming grid =
+--     let
+--         ( Matrix.Width width, Matrix.Height height ) =
+--             Matrix.dimensions grid
+--         -- startCoords : Coords
+--         -- startCoords =
+--         --     ( 0, 0 )
+--         endCoords : Coords
+--         endCoords =
+--             ( width - 1, height - 1 )
+--         widthRange : List Int
+--         widthRange =
+--             List.range 1 (width - 1)
+--         heightRange : List Int
+--         heightRange =
+--             List.range 1 (height - 1)
+--         initialTable : Matrix Int
+--         initialTable =
+--             Matrix.map (always 0) grid
+--         table2 : Matrix Int
+--         table2 =
+--             -- Matrix.set startCoords 0 initialTable
+--             -- grid
+--             --     |> Matrix.get startCoords
+--             --     |> Maybe.map (\(Risk risk) -> Matrix.set startCoords risk initialTable)
+--             --     |> Maybe.withDefault initialTable
+--             initialTable
+--         tableFilledColumn : Matrix Int
+--         tableFilledColumn =
+--             List.foldl
+--                 (\j acc ->
+--                     Maybe.map2
+--                         (\(Risk currentRisk) risk -> Matrix.set ( 0, j ) (currentRisk + risk) acc)
+--                         (Matrix.get ( 0, j ) grid)
+--                         (Matrix.get ( 0, j - 1 ) acc)
+--                         -- |> (\x ->
+--                         --         if x == Nothing then
+--                         --             Debug.log "got Nothing" x
+--                         --         else
+--                         --             x
+--                         --    )
+--                         |> Maybe.withDefault acc
+--                 )
+--                 table2
+--                 heightRange
+--         tableFilledRow : Matrix Int
+--         tableFilledRow =
+--             List.foldl
+--                 (\i acc ->
+--                     Maybe.map2
+--                         (\(Risk currentRisk) risk -> Matrix.set ( i, 0 ) (currentRisk + risk) acc)
+--                         (Matrix.get ( i, 0 ) grid)
+--                         (Matrix.get ( i - 1, 0 ) acc)
+--                         |> Maybe.withDefault acc
+--                 )
+--                 tableFilledColumn
+--                 widthRange
+--         filledTable : Matrix Int
+--         filledTable =
+--             List.foldl
+--                 (\j acc ->
+--                     List.foldl
+--                         (\i acc_ ->
+--                             let
+--                                 _ =
+--                                     Debug.log "coords" ( j, i )
+--                             in
+--                             Maybe.map3
+--                                 (\(Risk currentRisk) risk1 risk2 ->
+--                                     Matrix.set ( i, j ) (currentRisk + min risk1 risk2) acc_
+--                                 )
+--                                 (Matrix.get ( i, j ) grid)
+--                                 (Matrix.get ( i - 1, j ) acc_)
+--                                 (Matrix.get ( i, j - 1 ) acc_)
+--                                 |> Maybe.withDefault acc_
+--                         )
+--                         acc
+--                         widthRange
+--                 )
+--                 tableFilledRow
+--                 heightRange
+--         -- |> (\x ->
+--         --         let
+--         --             _ =
+--         --                 x
+--         --                     |> Matrix.foldlRows
+--         --                         (\_ row y ->
+--         --                             let
+--         --                                 _ =
+--         --                                     Debug.log "row" row
+--         --                             in
+--         --                             y
+--         --                         )
+--         --                         0
+--         --         in
+--         --         x
+--         --    )
+--     in
+--     filledTable
+--         |> Matrix.get endCoords
+--         |> Maybe.map Risk

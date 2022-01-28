@@ -1,6 +1,7 @@
 module Day13 exposing (puzzle1, puzzle2)
 
 import Array
+import Lens exposing (Lens)
 import Parser exposing ((|.), (|=), Parser)
 import Set exposing (Set)
 import Set.Extra
@@ -34,6 +35,30 @@ type alias Paper =
     { coordinates : Set Coords
     , instructions : List Instruction
     }
+
+
+coordinatesLens : Lens Paper (Set Coords)
+coordinatesLens =
+    Lens.new
+        .coordinates
+        (\coordinates paper -> { paper | coordinates = coordinates })
+
+
+instructionsLens : Lens Paper (List Instruction)
+instructionsLens =
+    Lens.new
+        .instructions
+        (\instructions paper -> { paper | instructions = instructions })
+
+
+mapCoordinates : (Set Coords -> Set Coords) -> Paper -> Paper
+mapCoordinates =
+    Lens.map coordinatesLens
+
+
+mapInstructions : (List Instruction -> List Instruction) -> Paper -> Paper
+mapInstructions =
+    Lens.map instructionsLens
 
 
 newPaper : Paper
@@ -186,7 +211,7 @@ paperParser =
                             (\coords ->
                                 Parser.Loop
                                     ( parserStep
-                                    , { paper | coordinates = Set.insert coords paper.coordinates }
+                                    , mapCoordinates (Set.insert coords) paper
                                     )
                             )
                             |= coordsParser
@@ -201,13 +226,13 @@ paperParser =
                             (\instruction ->
                                 Parser.Loop
                                     ( parserStep
-                                    , { paper | instructions = instruction :: paper.instructions }
+                                    , mapInstructions ((::) instruction) paper
                                     )
                             )
                             |= instructionParser
                             |. Parser.spaces
                         , Parser.end
-                            |> Parser.map (\_ -> Parser.Done { paper | instructions = List.reverse paper.instructions })
+                            |> Parser.map (\_ -> Parser.Done <| mapInstructions List.reverse paper)
                         ]
 
 
