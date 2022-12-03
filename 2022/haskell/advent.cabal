@@ -27,6 +27,7 @@ library
   exposed-modules:
       Day01
       Day02
+      Day03
       Lib
       Logger
   other-modules:
@@ -72,6 +73,7 @@ test-suite advent-test
   other-modules:
       Day01Spec
       Day02Spec
+      Day03Spec
       Paths_advent
   hs-source-dirs:
       test
