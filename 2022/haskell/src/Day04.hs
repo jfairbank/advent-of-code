@@ -5,51 +5,47 @@ module Day04 (puzzle1, puzzle2) where
 import Data.Functor ((<&>))
 import Data.Maybe (fromMaybe)
 import Data.Monoid (Sum (..))
-import Data.Set (Set)
-import qualified Data.Set as Set
 import Data.Text (Text)
 import qualified Data.Text as Text
+import Range (Range)
+import qualified Range
 import qualified Utils
 
-type Range = Set Int
-
-type Pair = (Range, Range)
+type Pair = (Range Int, Range Int)
 
 puzzle1 :: Text -> Int
 puzzle1 =
-  countContainedRanges countFullyContainedRange . parseInput
+  countContainedRanges rangesHaveFullContainment . parseInput
+  where
+    rangesHaveFullContainment (range1, range2) =
+      Range.isSubsetOf range1 range2 || Range.isSubsetOf range2 range1
 
 puzzle2 :: Text -> Int
 puzzle2 =
-  countContainedRanges countPartiallyContainedRange . parseInput
+  countContainedRanges rangesOverlap . parseInput
+  where
+    rangesOverlap (range1, range2) =
+      not $ Range.disjoint range1 range2
 
 parseInput :: Text -> [Pair]
 parseInput =
   fromMaybe [] . mapM parsePair . stripInput
+  where
+    stripInput = fmap Text.strip . Text.lines . Text.strip
 
-stripInput :: Text -> [Text]
-stripInput =
-  fmap Text.strip . Text.lines . Text.strip
-
-countContainedRanges :: (Pair -> Int) -> [Pair] -> Int
-countContainedRanges counter =
-  getSum . foldMap (Sum . counter)
-
-countFullyContainedRange :: Pair -> Int
-countFullyContainedRange (range1, range2) =
-  if Set.isSubsetOf range1 range2 || Set.isSubsetOf range2 range1 then 1 else 0
-
-countPartiallyContainedRange :: Pair -> Int
-countPartiallyContainedRange (range1, range2) =
-  if Set.size (Set.intersection range1 range2) > 0 then 1 else 0
+countContainedRanges :: (Pair -> Bool) -> [Pair] -> Int
+countContainedRanges checkContainment =
+  getSum . foldMap (Sum . countContainedRange)
+  where
+    countContainedRange pair =
+      if checkContainment pair then 1 else 0
 
 parsePair :: Text -> Maybe Pair
 parsePair pair =
   mapM parseRange (Text.split (== ',') pair)
     >>= Utils.listToPair
-
-parseRange :: Text -> Maybe Range
-parseRange range =
-  mapM Utils.textReadMaybe (Text.split (== '-') range)
-    >>= Utils.listToPair
-    <&> Set.fromList . uncurry enumFromTo
+  where
+    parseRange range =
+      mapM Utils.textReadMaybe (Text.split (== '-') range)
+        >>= Utils.listToPair
+        <&> Range.fromTuple
