@@ -3,10 +3,11 @@
 
 module Day02 (Score (..), puzzle1, puzzle2) where
 
-import qualified Data.Bifunctor as Bifunctor
+import Data.Bifunctor (bimap)
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import qualified Data.Text as Text
+import qualified Utils
 
 ---- SHAPE ----
 
@@ -111,13 +112,9 @@ scoreGame opponent player@(Player playerShape) =
 
 ---- HELPERS ----
 
-listToPair :: [a] -> Maybe (a, a)
-listToPair (x : y : _) = Just (x, y)
-listToPair _ = Nothing
-
 parseLine :: (Read a, Read b) => Text -> Maybe (a, b)
 parseLine line =
-  Bifunctor.bimap read read <$> listToPair (Text.unpack <$> Text.splitOn " " line)
+  bimap read read <$> Utils.listToPair (Text.unpack <$> Text.splitOn " " line)
 
 stripInput :: Text -> [Text]
 stripInput =

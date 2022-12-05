@@ -28,8 +28,10 @@ library
       Day01
       Day02
       Day03
+      Day04
       Lib
       Logger
+      Utils
   other-modules:
       Paths_advent
   hs-source-dirs:
@@ -74,6 +76,7 @@ test-suite advent-test
       Day01Spec
       Day02Spec
       Day03Spec
+      Day04Spec
       Paths_advent
   hs-source-dirs:
       test
