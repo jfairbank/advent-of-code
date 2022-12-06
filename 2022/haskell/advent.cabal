@@ -30,6 +30,7 @@ library
       Day03
       Day04
       Day05
+      Day06
       Lib
       Logger
       Range
@@ -85,6 +86,7 @@ test-suite advent-test
       Day03Spec
       Day04Spec
       Day05Spec
+      Day06Spec
       Paths_advent
   hs-source-dirs:
       test
