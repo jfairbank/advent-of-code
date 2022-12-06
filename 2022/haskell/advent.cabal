@@ -29,9 +29,11 @@ library
       Day02
       Day03
       Day04
+      Day05
       Lib
       Logger
       Range
+      Stack
       Utils
   other-modules:
       Paths_advent
@@ -39,10 +41,12 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      array
+    , base >=4.7 && <5
     , containers
     , extra
     , hspec
+    , parsec
     , raw-strings-qq
     , split
     , tasty
@@ -59,10 +63,12 @@ executable advent-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       advent
+    , array
     , base >=4.7 && <5
     , containers
     , extra
     , hspec
+    , parsec
     , raw-strings-qq
     , split
     , tasty
@@ -78,16 +84,19 @@ test-suite advent-test
       Day02Spec
       Day03Spec
       Day04Spec
+      Day05Spec
       Paths_advent
   hs-source-dirs:
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       advent
+    , array
     , base >=4.7 && <5
     , containers
     , extra
     , hspec
+    , parsec
     , raw-strings-qq
     , split
     , tasty

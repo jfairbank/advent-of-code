@@ -1,4 +1,4 @@
-module Utils (listToPair, textRead, textReadMaybe) where
+module Utils (listToPair, strip, textRead, textReadMaybe) where
 
 import Data.Text (Text)
 import qualified Data.Text as Text
@@ -15,3 +15,7 @@ textRead =
 textReadMaybe :: Read a => Text -> Maybe a
 textReadMaybe =
   readMaybe . Text.unpack
+
+strip :: String -> String
+strip =
+  Text.unpack . Text.strip . Text.pack
