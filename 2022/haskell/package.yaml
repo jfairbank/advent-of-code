@@ -25,12 +25,14 @@ dependencies:
 - containers
 - extra
 - hspec
+- mtl
 - parsec
 - raw-strings-qq
 - split
 - tasty
 - tasty-hspec
 - text
+- transformers
 
 ghc-options:
 - -Wall
