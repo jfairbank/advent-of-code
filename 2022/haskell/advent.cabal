@@ -32,11 +32,14 @@ library
       Day05
       Day06
       Day07
+      Day08
+      Grid
       Lib
       Logger
       Range
       Stack
       Utils
+      Utils.List
   other-modules:
       Paths_advent
   hs-source-dirs:
@@ -93,6 +96,7 @@ test-suite advent-test
       Day05Spec
       Day06Spec
       Day07Spec
+      Day08Spec
       Paths_advent
   hs-source-dirs:
       test

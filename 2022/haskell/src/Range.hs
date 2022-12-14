@@ -1,9 +1,11 @@
 module Range
   ( Range,
+    contains,
     disjoint,
     fromTuple,
     isSubsetOf,
     new,
+    toList,
   )
 where
 
@@ -14,6 +16,13 @@ new = Range
 
 fromTuple :: (a, a) -> Range a
 fromTuple = uncurry Range
+
+contains :: (Enum a, Ord a) => a -> Range a -> Bool
+contains value range =
+  value `elem` toList range
+
+toList :: Enum a => Range a -> [a]
+toList (Range from to) = [from .. to]
 
 disjoint :: Ord a => Range a -> Range a -> Bool
 disjoint (Range from1 to1) (Range from2 to2) =

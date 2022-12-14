@@ -10,6 +10,7 @@ import qualified Data.Text as Text
 import Range (Range)
 import qualified Range
 import qualified Utils
+import qualified Utils.List
 
 type Pair = (Range Int, Range Int)
 
@@ -43,9 +44,9 @@ countContainedRanges checkContainment =
 parsePair :: Text -> Maybe Pair
 parsePair pair =
   mapM parseRange (Text.split (== ',') pair)
-    >>= Utils.listToPair
+    >>= Utils.List.toPair
   where
     parseRange range =
       mapM Utils.textReadMaybe (Text.split (== '-') range)
-        >>= Utils.listToPair
+        >>= Utils.List.toPair
         <&> Range.fromTuple
