@@ -33,6 +33,7 @@ library
       Day06
       Day07
       Day08
+      Day09
       Grid
       Lib
       Logger
@@ -48,11 +49,13 @@ library
   build-depends:
       array
     , base >=4.7 && <5
+    , bifunctors
     , containers
     , extra
     , hspec
     , mtl
     , parsec
+    , process
     , raw-strings-qq
     , split
     , tasty
@@ -72,11 +75,13 @@ executable advent-exe
       advent
     , array
     , base >=4.7 && <5
+    , bifunctors
     , containers
     , extra
     , hspec
     , mtl
     , parsec
+    , process
     , raw-strings-qq
     , split
     , tasty
@@ -97,6 +102,7 @@ test-suite advent-test
       Day06Spec
       Day07Spec
       Day08Spec
+      Day09Spec
       Paths_advent
   hs-source-dirs:
       test
@@ -105,11 +111,13 @@ test-suite advent-test
       advent
     , array
     , base >=4.7 && <5
+    , bifunctors
     , containers
     , extra
     , hspec
     , mtl
     , parsec
+    , process
     , raw-strings-qq
     , split
     , tasty
