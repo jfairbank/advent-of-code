@@ -94,6 +94,7 @@ test-suite advent-test
                       , Day02Spec
                       , Day03Spec
                       , Day04Spec
+                      , Paths_advent
 
     -- Test dependencies.
     build-depends:    base ^>=4.17.2.1
@@ -104,3 +105,4 @@ test-suite advent-test
                       , tasty
                       , tasty-hspec
                       , text
+                      , transformers
