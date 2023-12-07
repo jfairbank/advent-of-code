@@ -58,7 +58,9 @@ library advent-lib
                       , Day02
                       , Day03
                       , Day04
+                      , Day06
                       , Grid
+    other-modules:    Utils
     hs-source-dirs:   src
     build-depends:    array
                       , base ^>=4.17.2.1
@@ -94,6 +96,7 @@ test-suite advent-test
                       , Day02Spec
                       , Day03Spec
                       , Day04Spec
+                      , Day06Spec
                       , Paths_advent
 
     -- Test dependencies.
