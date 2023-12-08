@@ -60,6 +60,7 @@ library advent-lib
                       , Day04
                       , Day06
                       , Day07
+                      , Day08
                       , Grid
     other-modules:    Utils
     hs-source-dirs:   src
@@ -99,6 +100,7 @@ test-suite advent-test
                       , Day04Spec
                       , Day06Spec
                       , Day07Spec
+                      , Day08Spec
                       , Paths_advent
 
     -- Test dependencies.
