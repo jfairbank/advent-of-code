@@ -7,6 +7,7 @@ import qualified Day06Spec
 import qualified Day07Spec
 import qualified Day08Spec
 import qualified Day09Spec
+import qualified Day10Spec
 import Test.Hspec (hspec)
 
 main :: IO ()
@@ -20,5 +21,6 @@ main =
       Day06Spec.suite,
       Day07Spec.suite,
       Day08Spec.suite,
-      Day09Spec.suite
+      Day09Spec.suite,
+      Day10Spec.suite
     ]

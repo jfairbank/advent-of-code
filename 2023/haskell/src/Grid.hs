@@ -1,7 +1,7 @@
 module Grid
-  ( Coord,
-    Grid,
+  ( Grid,
     columnSize,
+    findCoord,
     fromList,
     get,
     getNeighborCoords,
@@ -14,11 +14,10 @@ module Grid
   )
 where
 
+import Coord (Coord)
 import Data.Array (Array, (!))
 import qualified Data.Array as Array
 import Data.Maybe (mapMaybe)
-
-type Coord = (Int, Int)
 
 data Row a = Row
   { size :: Int,
@@ -126,3 +125,23 @@ indexedRowFoldl f init =
     . foldl
       (\(j, acc) item -> (j + 1, f j acc item))
       (0, init)
+
+findIndex :: (a -> Bool) -> Int -> Array Int a -> Maybe Int
+findIndex f size array =
+  helper 0
+  where
+    helper i
+      | i >= size = Nothing
+      | f (array ! i) = Just i
+      | otherwise = helper (i + 1)
+
+findCoord :: (a -> Bool) -> Grid a -> Maybe Coord
+findCoord f grid@(Grid_ {array = array, columnSize = columnSize, rowSize = rowSize}) =
+  helper 0
+  where
+    helper rowIndex
+      | rowIndex >= rowSize = Nothing
+      | otherwise =
+          case findIndex f columnSize $ rowArray $ array ! rowIndex of
+            Just columnIndex -> Just (rowIndex, columnIndex)
+            Nothing -> helper (rowIndex + 1)
